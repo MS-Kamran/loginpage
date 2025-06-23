@@ -7,7 +7,7 @@ import jwt
 import secrets
 
 app = Flask(__name__)
-app.secret_key = secrets.token_hex(16)  # Generate a secure secret key
+app.secret_key = os.getenv('SECRET_KEY', secrets.token_hex(16))  # Use environment variable or generate secure key
 
 # Google OAuth configuration
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
@@ -226,5 +226,8 @@ if __name__ == '__main__':
     os.makedirs('static/css', exist_ok=True)
     os.makedirs('static/js', exist_ok=True)
     
-    # Use port 5001 to avoid conflict with AirPlay on macOS
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    # Get port from environment variable (for deployment) or use 5001 for local development
+    port = int(os.getenv('PORT', 5001))
+    debug = os.getenv('FLASK_ENV') == 'development'
+    
+    app.run(debug=debug, host='0.0.0.0', port=port)
