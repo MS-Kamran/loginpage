@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Welcome {{ user.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Navigation Header -->
+        <nav class="dashboard-nav">
+            <div class="nav-content">
+                <div class="nav-left">
+                    <div class="logo">
+                        <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="40" height="40" rx="8" fill="#4285F4"/>
+                            <path d="M20 12C24.4183 12 28 15.5817 28 20C28 24.4183 24.4183 28 20 28C15.5817 28 12 24.4183 12 20C12 15.5817 15.5817 12 20 12Z" fill="white"/>
+                            <path d="M20 16C22.2091 16 24 17.7909 24 20C24 22.2091 22.2091 24 20 24C17.7909 24 16 22.2091 16 20C16 17.7909 17.7909 16 20 16Z" fill="#4285F4"/>
+                        </svg>
+                        <span>Dashboard</span>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <div class="user-menu">
+                        <div class="user-info">
+                            <img src="{{ user.picture or '/static/images/default-avatar.svg' }}" alt="{{ user.name }}" class="user-avatar">
+                            <span class="user-name">{{ user.name }}</span>
+                        </div>
+                        <div class="user-dropdown">
+                            <button class="dropdown-btn" id="userMenuBtn">
+                                <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu" id="userDropdown">
+                                <a href="#" class="dropdown-item">
+                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Profile
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Settings
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="{{ url_for('logout') }}" class="dropdown-item logout">
+                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/>
+                                    </svg>
+                                    Sign Out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <h1>Welcome back, {{ user.name.split(' ')[0] }}! 👋</h1>
+                    <p>You've successfully signed in with Google OAuth 2.0</p>
+                </div>
+                <div class="welcome-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" fill="#10B981" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Authenticated</h3>
+                            <p>Secure login verified</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" fill="#3B82F6" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Protected</h3>
+                            <p>Session secured</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg width="24" height="24" fill="#8B5CF6" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3>OAuth 2.0</h3>
+                            <p>Google verified</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- User Information Section -->
+            <section class="user-info-section">
+                <div class="section-header">
+                    <h2>Your Profile Information</h2>
+                    <p>Information retrieved from your Google account</p>
+                </div>
+                <div class="user-card">
+                    <div class="user-avatar-large">
+                        <img src="{{ user.picture or '/static/images/default-avatar.svg' }}" alt="{{ user.name }}">
+                    </div>
+                    <div class="user-details">
+                        <div class="detail-item">
+                            <label>Full Name</label>
+                            <span>{{ user.name }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Email Address</label>
+                            <span>{{ user.email or 'Not provided' }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>User ID</label>
+                            <span class="user-id">{{ user.id }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Login Provider</label>
+                            <span class="provider-{{ user.provider or 'google' }}">{{ (user.provider or 'google').title() }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>Last Login</label>
+                            <span>{{ user.last_login or 'Current session' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features-section">
+                <div class="section-header">
+                    <h2>Available Features</h2>
+                    <p>Explore what you can do with your authenticated session</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="32" height="32" fill="#4285F4" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <h3>API Access</h3>
+                        <p>Access protected API endpoints with your authenticated session</p>
+                        <button class="feature-btn" onclick="testAPI()">Test API</button>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="32" height="32" fill="#10B981" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <h3>Session Management</h3>
+                        <p>Your session is automatically managed with JWT tokens</p>
+                        <button class="feature-btn" onclick="refreshSession()">Refresh</button>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="32" height="32" fill="#EF4444" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <h3>Security</h3>
+                        <p>Your data is protected with industry-standard security measures</p>
+                        <button class="feature-btn" onclick="showSecurityInfo()">Learn More</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast" style="display: none;">
+        <div class="toast-content">
+            <div class="toast-icon" id="toastIcon"></div>
+            <span id="toastMessage"></span>
+            <button id="closeToast" class="close-toast">×</button>
+        </div>
+    </div>
+
+    <script>
+        // Toggle user dropdown
+        document.getElementById('userMenuBtn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.remove('show');
+        });
+
+        // Test API function
+        function testAPI() {
+            fetch('/api/user')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        showToast('API Error: ' + data.error, 'error');
+                    } else {
+                        showToast('API call successful! User: ' + data.name, 'success');
+                    }
+                })
+                .catch(error => {
+                    showToast('Network error: ' + error.message, 'error');
+                });
+        }
+
+        // Refresh session function
+        function refreshSession() {
+            // In a real app, this would refresh the JWT token
+            showToast('Session refreshed successfully!', 'success');
+        }
+
+        // Show security info
+        function showSecurityInfo() {
+            showToast('Your session uses JWT tokens with 24-hour expiry and HTTP-only cookies for security.', 'info');
+        }
+
+        // Toast notification system
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            const toastIcon = document.getElementById('toastIcon');
+            
+            toastMessage.textContent = message;
+            
+            // Set icon based on type
+            const icons = {
+                success: '<svg width="20" height="20" fill="#10B981" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>',
+                error: '<svg width="20" height="20" fill="#EF4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>',
+                info: '<svg width="20" height="20" fill="#3B82F6" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>'
+            };
+            
+            toastIcon.innerHTML = icons[type] || icons.info;
+            toast.className = `toast toast-${type}`;
+            toast.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 5000);
+        }
+
+        // Close toast
+        document.getElementById('closeToast').addEventListener('click', () => {
+            document.getElementById('toast').style.display = 'none';
+        });
+
+        // Format last login time
+        document.addEventListener('DOMContentLoaded', function() {
+            const lastLoginElements = document.querySelectorAll('.detail-item span');
+            lastLoginElements.forEach(element => {
+                if (element.textContent.includes('T')) {
+                    // Format ISO date string to readable format
+                    const date = new Date(element.textContent);
+                    element.textContent = date.toLocaleString();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
