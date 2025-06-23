@@ -7,16 +7,16 @@ import jwt
 import secrets
 
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY', secrets.token_hex(16))  # Use environment variable or generate secure key
+app.secret_key = secrets.token_hex(16)  # Generate a secure secret key
 
 # Google OAuth configuration
-GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
-GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID', 'your-google-client-id.apps.googleusercontent.com')
+GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET', 'your-google-client-secret')
 
 # Facebook OAuth Configuration
-FACEBOOK_APP_ID = os.getenv('FACEBOOK_APP_ID')
-FACEBOOK_APP_SECRET = os.getenv('FACEBOOK_APP_SECRET')
-JWT_SECRET = os.getenv('JWT_SECRET', secrets.token_hex(32))  # For JWT token generation
+FACEBOOK_APP_ID = os.environ.get('FACEBOOK_APP_ID', 'your-facebook-app-id')
+FACEBOOK_APP_SECRET = os.environ.get('FACEBOOK_APP_SECRET', 'your-facebook-app-secret')
+JWT_SECRET = secrets.token_hex(32)  # For JWT token generation
 JWT_ALGORITHM = "HS256"
 
 # In-memory user storage (use a database in production)
@@ -227,7 +227,7 @@ if __name__ == '__main__':
     os.makedirs('static/js', exist_ok=True)
     
     # Get port from environment variable (for deployment) or use 5001 for local development
-    port = int(os.getenv('PORT', 5001))
-    debug = os.getenv('FLASK_ENV') == 'development'
+    port = int(os.environ.get('PORT', 5001))
+    debug = os.environ.get('FLASK_ENV') != 'production'
     
     app.run(debug=debug, host='0.0.0.0', port=port)
